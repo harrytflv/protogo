@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package protogo.user;
+
+option go_package = "./;user";
+
+service UserManagement {
+  rpc Create (User) returns (Response) {}
+}
+
+message User {
+  string name = 1;
+}
+
+message Response {}
