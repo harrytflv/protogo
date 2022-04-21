@@ -15,19 +15,24 @@ generate_by_generator: generator_image
 	$(call echo_section,Generate Go files using generator)
 	docker run --rm \
 		--user ${CURRENT_UID}:${CURRENT_GID} \
-		-v $(shell pwd):/go/src/protogo \
+		-v $(shell pwd)/pb:/go/src/protogo/pb \
+		-v $(shell pwd)/Makefile:/go/src/protogo/Makefile \
 		${PB_GEN} \
 		make generate
 
 PROTOC := protoc
-INCDIR := -I .
-GO_OUT_OPTS := --go-grpc_out=. --go_out=.
+INCDIR := -I . \
+	-I vendor/github.com/envoyproxy/protoc-gen-validate \
+# GO_OUT_OPTS := --go-grpc_out=. --go_out=.
 
-generate: pb_go
+generate: user
 
-pb_go:
-	${PROTOC} ${INCDIR} ${GO_OUT_OPTS} \
-		pb/user/user.proto 
+DIR := pb/user
+user:
+	${PROTOC} ${INCDIR} \
+		--go-grpc_out=${DIR} --go_out=${DIR} \
+		--validate_out="lang=go:${DIR}" \
+		${DIR}/user.proto
 
 clean:
 	$(call echo_section,Clean)

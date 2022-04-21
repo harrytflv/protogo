@@ -4,12 +4,16 @@ package protogo.user;
 
 option go_package = "./;user";
 
+import "validate/validate.proto";
+
 service UserManagement {
   rpc Create (User) returns (Response) {}
 }
 
 message User {
-  string name = 1;
+  string name = 1 [
+    (validate.rules).string = {min_len: 1, max_len: 100}
+  ];
 }
 
 message Response {}
