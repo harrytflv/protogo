@@ -8,11 +8,11 @@ Setup of Go code generation from `.proto` files.
 * Developers implmenting gRPC services given the interface should not need to generate code from `.proto` files.
 * Developers doing slight modifications on a given API should only need to run a `make` command to update the API.
 * Only Docker and GNU make are required in development environment.
-* Support importing `.proto` files from other services.
+* Support importing third-party `.proto` files.
 
 ### New Enhancements
 * Developers creating new gRPC services should need to worry about setup the code generation environment as long as no new third-party imports are needed.
-* Support importing third-party `.proto` files.
+* Support importing `.proto` files from other services.
 
 ## Design Idea
 Build a generator image with all tools and dependencies, and execute code generation within container.
