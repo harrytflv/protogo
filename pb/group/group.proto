@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package protogo.user;
+
+option go_package = "github.com/harrytflv/protogo/pb/group";
+
+import "pb/user/user.proto";
+
+service GroupManagement {
+  rpc Create (Group) returns (Response) {}
+}
+
+message Group {
+  repeated User users = 1;
+}
