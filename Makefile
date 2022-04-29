@@ -1,3 +1,5 @@
+########     Environment setup       ########
+
 all: generate_by_generator
 
 CURRENT_UID ?= $(shell id -u)
@@ -32,6 +34,10 @@ generate_validate = ${PROTOC} ${INCDIR} \
 	--validate_out="lang=go:${GOPATH}/src" \
 	$1
 
+########  End of environment setup   ########
+
+######## Begin list of gRPC services ########
+
 generate: user group
 
 user:
@@ -40,7 +46,3 @@ user:
 
 group:
 	$(call generate,pb/group/group.proto)
-
-clean:
-	$(call echo_section,Clean)
-	docker rmi -f ${PB_GEN}
